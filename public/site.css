@@ -1,0 +1,70 @@
+/* Solicitudes, boletín, aviso de cookies y página de privacidad. Usa las variables de la página (index.html). */
+.hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
+.rq label{display:flex;flex-direction:column;gap:6px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:12px}
+.rq input,.rq select,.rq textarea{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:13px 14px;color:var(--fg);font:300 16px var(--sans);letter-spacing:0;text-transform:none;width:100%;min-width:0;box-sizing:border-box}
+.rq select option{background:var(--deep)}
+.rq input:focus,.rq select:focus,.rq textarea:focus{outline:none;border-color:var(--gold)}
+.rq [aria-invalid=true]{border-color:#ff8f80}
+.rq button[type=submit]{margin-top:18px;cursor:pointer}
+.rq button[disabled]{opacity:.6;cursor:progress}
+.rq .ok,.rfp .ok{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:15px;background:rgba(98,214,166,.12);border:1px solid rgba(98,214,166,.35);color:#bff3dc}
+.rq .ok.err,.rfp .ok.err{background:rgba(255,122,107,.12);border-color:rgba(255,122,107,.4);color:#ffd2cb}
+.rfp .ok{grid-column:1/-1}
+
+.rqm{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:rgba(4,8,16,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;transition:opacity .3s}
+.rqm.on{opacity:1}
+.rqm,.rqm .box{box-sizing:border-box}
+.rqm{grid-template-columns:minmax(0,1fr);justify-items:center}
+.rqm .box{width:min(640px,100%);min-width:0;max-height:100%;overflow:auto;border-radius:28px;padding:30px;background:linear-gradient(180deg,rgba(20,32,54,.94),rgba(10,18,32,.96));border:1px solid rgba(255,255,255,.14);box-shadow:0 40px 100px rgba(0,0,0,.6);transform:translateY(16px);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.rqm.on .box{transform:none}
+.rqm .hd{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.rqm .kick{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.rqm h2{font-family:var(--serif);font-weight:300;font-size:clamp(30px,5vw,42px);line-height:1.05;margin:6px 0 0}
+.rqm .x{all:unset;cursor:pointer;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.2);font-size:20px;flex:none}
+.rqm .x:focus-visible,.rqm .x:hover{border-color:var(--gold);color:var(--gold)}
+.rqm .sub{color:var(--muted);margin:10px 0 4px;font-size:15px}
+.rqm .f2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}
+.rqm .f2 .full{grid-column:1/-1}
+.rqm .chk{flex-direction:row;align-items:center;gap:10px;text-transform:none;letter-spacing:0;font-size:15px;color:var(--muted)}
+.rqm .chk input{width:20px;height:20px;accent-color:var(--gold);flex:none}
+.rqm .note{font-size:12.5px;color:var(--faint);margin-top:14px}
+.rqm .done{text-align:center;padding:26px 0 8px}
+.rqm .done .tick{width:64px;height:64px;border-radius:50%;margin:0 auto 18px;display:grid;place-items:center;background:rgba(98,214,166,.14);border:1px solid rgba(98,214,166,.5);color:#8fe8c3;font-size:30px}
+.rqm .done p{color:var(--muted)}
+@media(max-width:560px){.rqm .box{padding:22px;border-radius:22px}.rqm .f2{grid-template-columns:1fr}}
+
+.ck{position:fixed;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:150;max-width:760px;margin:0 auto;padding:16px 18px;border-radius:20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:rgba(12,20,36,.94);border:1px solid rgba(255,255,255,.16);box-shadow:0 20px 60px rgba(0,0,0,.5);font-size:14.5px;color:var(--muted)}
+.ck p{margin:0;flex:1 1 280px}
+.ck a{color:var(--gold)}
+.ck .bt{display:flex;gap:8px}
+.ck button{all:unset;cursor:pointer;padding:10px 16px;border-radius:99px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;border:1px solid rgba(255,255,255,.25);color:var(--fg)}
+.ck button.y{background:var(--gold);border-color:var(--gold);color:#0a1424}
+.ck button:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+
+.legal{max-width:760px;text-align:left}
+.legal h3{font-family:var(--serif);font-weight:400;font-size:26px;margin:28px 0 6px}
+.legal p{color:var(--muted);font-size:17px;line-height:1.7;margin:0}
+.legal a{color:var(--gold)}
+@media(prefers-reduced-motion:reduce){.rqm,.rqm .box{transition:none}}
+
+/* Idioma */
+.lang{display:inline-flex;align-items:center;gap:4px}
+.lang button,.lgf{all:unset;cursor:pointer;padding:4px 5px;border-radius:6px;letter-spacing:inherit}
+.lang button[aria-pressed=true],.lgf[aria-pressed=true]{color:var(--gold)}
+.lang button:focus-visible,.lgf:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.lang i{font-style:normal;opacity:.5}
+
+/* Nada desborda a lo ancho (los carruseles se recortan dentro de su sección). */
+html{overflow-x:clip}
+#contact-block{overflow-x:clip}
+#hero{contain:paint}
+
+/* Novedades: lo que el hotel publica desde su panel */
+.news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:22px;margin-top:40px;text-align:left;width:100%}
+.nw{border-radius:26px;padding:28px;display:flex;flex-direction:column;gap:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.nw .tag{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.nw h3{font-family:var(--serif);font-weight:400;font-size:30px;line-height:1.08;margin:0}
+.nw p{color:var(--muted);margin:0;font-size:16px;line-height:1.6;white-space:pre-line}
+.nw .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.nw .meta span{font-size:13px;padding:6px 12px;border-radius:99px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}
+.nw .btn{margin-top:auto;align-self:flex-start;cursor:pointer}
