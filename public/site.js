@@ -188,6 +188,7 @@
     const kind = a.dataset.req, ctx = {}
     if (a.dataset.roomFrom === 'hash') ctx.room = (location.hash.match(/^#room-(.+)$/) || [])[1]
     if (a.dataset.itemName) ctx.itemName = a.dataset.itemName
+    if (a.dataset.item) ctx.item = a.dataset.item
     if (a.dataset.itemFrom === 'rail') ctx.itemName = a.closest('.feat')?.querySelector('h3')?.textContent?.trim() || ''
     if (kind === 'mesa') ctx.venue = $('#dine-stage [role=tab][aria-selected=true]')?.dataset.k
     track('click', 'cta-' + kind)
@@ -327,4 +328,87 @@
   const consent = store.get('lr_consent')
   if (consent === 'yes') startTracking(); else if (consent !== 'no') banner()
   document.addEventListener('click', (e) => { if (e.target.closest('[data-cookie-reset]')) { e.preventDefault(); store.del('lr_consent'); if (!$('.ck')) banner() } })
+
+  /* ---------- Fiesta de Año Nuevo: cuenta regresiva, fuegos artificiales y fin automático ---------- */
+  ;(() => {
+    const START = Date.parse('2026-12-31T19:30:00-08:00') // recepción, hora de Rosarito
+    const END = Date.parse('2027-01-01T06:00:00-08:00')   // después de la fiesta se oculta todo
+    if (Date.now() > END) {
+      document.querySelectorAll('[data-nye]').forEach((el) => { el.hidden = true; if (el.tagName === 'MAIN') el.removeAttribute('data-view') })
+      if (location.hash === '#new-year') location.hash = '#home'
+      return
+    }
+    const box = $('#nye-count')
+    const pad = (n) => String(n).padStart(2, '0')
+    const tick = () => {
+      if (!box) return
+      const left = START - Date.now()
+      if (left <= 0) { box.closest('.nye-head')?.classList.add('nye-done'); return }
+      const d = Math.floor(left / 864e5), h = Math.floor(left / 36e5) % 24, m = Math.floor(left / 6e4) % 60, s = Math.floor(left / 1e3) % 60
+      const set = (u, v) => { const b = box.querySelector(`[data-u="${u}"]`); if (b && b.textContent !== v) b.textContent = v }
+      set('d', String(d)); set('h', pad(h)); set('m', pad(m)); set('s', pad(s))
+    }
+    tick(); setInterval(tick, 1000)
+
+    // Video de la fiesta: solo corre mientras se ve.
+    const vid = $('#nye-v')
+    if (vid) new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting && !e.target.closest('[hidden]')) vid.play().catch(() => {}); else vid.pause() }), { threshold: 0.15 }).observe(vid)
+    addEventListener('hashchange', () => { if (vid && location.hash !== '#new-year') vid.pause() })
+    const toForm = () => setTimeout(() => $('#nye-buy')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('[data-nye-scroll]')) { e.preventDefault(); $('#nye-info')?.scrollIntoView({ behavior: 'smooth' }) }
+      if (e.target.closest('[data-nye-buy]')) { e.preventDefault(); track('click', 'cta-gala'); if (location.hash !== '#new-year') { location.hash = '#new-year'; setTimeout(toForm, 250) } else toForm() }
+    })
+
+    // Boletos en la misma sección: cantidades, total y solicitud al equipo.
+    const buy = $('#nye-buy')
+    if (buy) {
+      const A = buy.elements.adults, C = buy.elements.children, err = $('.ok', buy), btn = $('button[type=submit]', buy)
+      const clamp = (el) => { const v = Math.round(Number(el.value)); el.value = String(Math.min(Number(el.max), Math.max(Number(el.min), isFinite(v) ? v : Number(el.min)))) }
+      const money = (n) => '$' + n.toFixed(2) + ' USD'
+      const total = () => { clamp(A); clamp(C); $('#nye-total').textContent = money(Number(A.value) * 99 + Number(C.value) * 49.5); $('#nye-many').hidden = Number(A.value) + Number(C.value) <= 4 }
+      buy.addEventListener('click', (e) => { const b = e.target.closest('[data-step]'); if (!b) return; const [n, d] = b.dataset.step.split(':'); const el = buy.elements[n]; el.value = String(Number(el.value || 0) + Number(d)); total() })
+      A.addEventListener('change', total); C.addEventListener('change', total); total()
+      buy.addEventListener('submit', async (e) => {
+        e.preventDefault(); total()
+        const problem = check('evento', buy)
+        if (problem) { err.textContent = T(problem); err.hidden = false; return }
+        err.hidden = true; btn.disabled = true; const label = btn.textContent; btn.textContent = T('Sending...')
+        const ctx = { item: 'gala-ano-nuevo', itemName: 'New Year’s Eve Gala 2027' }
+        const body = payload('evento', buy, ctx)
+        body.message = `${T('Tickets')}: ${A.value} ${T('Adults').toLowerCase()}, ${C.value} ${T('Children').toLowerCase()} · ${$('#nye-total').textContent}`
+        const out = await send('/api/solicitud', body)
+        if (!out.ok) { btn.disabled = false; btn.textContent = label; err.textContent = out.error; err.hidden = false; return }
+        track('click', 'solicitud-gala')
+        buy.innerHTML = `<div class="nye-done-box" role="status"><div class="tick">✓</div><h3>Tickets requested</h3><p>Thank you. Our reservations team will contact you shortly to confirm your tickets and send the payment details.</p></div>`
+      })
+    }
+
+    // Fuegos artificiales en canvas: dorado y champagne. Solo corren cuando se ven.
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+    const COLORS = ['255,226,160', '246,214,140', '255,246,225', '207,174,107', '255,200,120', '230,240,255']
+    document.querySelectorAll('canvas.nye-fw').forEach((cv) => {
+      const ctx = cv.getContext('2d'); if (!ctx) return
+      let W = 0, H = 0, dpr = 1, parts = [], rockets = [], raf = 0, on = false, last = 0, next = 0
+      const size = () => { dpr = Math.min(2, devicePixelRatio || 1); W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0) }
+      const burst = (x, y) => {
+        const c = COLORS[(Math.random() * COLORS.length) | 0], n = 70 + ((Math.random() * 50) | 0), sp = 2.2 + Math.random() * 2.4
+        for (let i = 0; i < n; i++) { const a = (i / n) * Math.PI * 2, v = sp * (0.55 + Math.random() * 0.45); parts.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1, decay: 0.008 + Math.random() * 0.01, c }) }
+      }
+      const launch = () => rockets.push({ x: W * (0.15 + Math.random() * 0.7), y: H, vy: -(H / 95 + Math.random() * 3.5), top: H * (0.12 + Math.random() * 0.3) })
+      const still = () => { size(); ctx.clearRect(0, 0, W, H); for (let i = 0; i < 4; i++) { burst(W * (0.18 + 0.21 * i), H * (0.2 + (i % 2) * 0.12)) } parts.forEach((p) => { for (let k = 0; k < 22; k++) { p.x += p.vx; p.y += p.vy; p.vy += 0.02 } ctx.fillStyle = `rgba(${p.c},.75)`; ctx.fillRect(p.x, p.y, 1.6, 1.6) }); parts = [] }
+      const frame = (t) => {
+        raf = on ? requestAnimationFrame(frame) : 0
+        if (t - last < 14) return; last = t
+        if (t > next) { launch(); if (Math.random() < 0.35) launch(); next = t + 700 + Math.random() * 900 }
+        ctx.globalCompositeOperation = 'destination-out'; ctx.fillStyle = 'rgba(0,0,0,.2)'; ctx.fillRect(0, 0, W, H)
+        ctx.globalCompositeOperation = 'lighter'
+        rockets = rockets.filter((r) => { const y0 = r.y; r.y += r.vy; r.vy *= 0.985; ctx.strokeStyle = 'rgba(255,236,190,.85)'; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(r.x, y0); ctx.lineTo(r.x, r.y); ctx.stroke(); if (r.y <= r.top || r.vy > -1) { burst(r.x, r.y); return false } return true })
+        parts = parts.filter((p) => { p.x += p.vx; p.y += p.vy; p.vx *= 0.985; p.vy = p.vy * 0.985 + 0.035; p.life -= p.decay; if (p.life <= 0) return false; ctx.fillStyle = `rgba(${p.c},${p.life.toFixed(2)})`; ctx.beginPath(); ctx.arc(p.x, p.y, 1.1 + p.life * 1.2, 0, 6.283); ctx.fill(); return true })
+      }
+      const run = (v) => { if (reduce) { if (v) still(); return } if (v && !on) { on = true; size(); raf = requestAnimationFrame(frame) } else if (!v && on) { on = false; cancelAnimationFrame(raf); raf = 0 } }
+      new IntersectionObserver((es) => es.forEach((e) => run(e.isIntersecting))).observe(cv)
+      addEventListener('resize', () => { if (on || reduce) size() })
+    })
+  })()
 })()

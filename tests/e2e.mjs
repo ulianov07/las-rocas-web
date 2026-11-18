@@ -133,6 +133,20 @@ try {
     await page.click('.rqm .done button')
   })
 
+  await step('Año Nuevo: el menú lleva a la fiesta y los boletos se piden ahí mismo', async () => {
+    await page.goto(base + '/#home')
+    await page.click('#links a.nye')
+    await page.waitForSelector('main[data-view="new-year"]:not([hidden])')
+    assert.match(await page.textContent('#nye-count [data-u="d"]'), /^\d+$/)
+    await page.click('#nye-buy [data-step="adults:1"]'); await page.click('#nye-buy [data-step="children:1"]')
+    assert.equal(await page.textContent('#nye-total'), '$346.50 USD')
+    await page.fill('#nye-buy [name=name]', 'Sarah Miller'); await page.fill('#nye-buy [name=email]', 'sarah@example.com')
+    await page.click('#nye-buy button[type=submit]'); await page.waitForSelector('#nye-buy .nye-done-box')
+    const r = last('solicitudes').body
+    assert.equal(r.kind, 'evento'); assert.equal(r.item_key, 'gala-ano-nuevo'); assert.equal(r.adults, 3); assert.equal(r.children, 1)
+    assert.match(r.details.evento, /New Year/); assert.match(r.message, /346\.50/)
+  })
+
   await step('bodas: el formulario de propuesta llega como boda', async () => {
     await page.goto(base + '/#weddings')
     await page.fill('#rn', 'Andrea & Luis'); await page.fill('#re', 'andrea@example.com'); await page.fill('#rph', '+52 664 555 2231'); await page.fill('#rg', '120'); await page.fill('#rm', 'Sunset ceremony')
