@@ -378,16 +378,104 @@ a.room:hover{transform:translateY(-6px);box-shadow:inset 0 1px 0 rgba(255,255,25
 .kbg span{font-size:14px;color:var(--muted);letter-spacing:.06em}
 @media(max-width:860px){.spa-pane,.promo,.opts{grid-template-columns:1fr}.ov-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ins .facts{grid-template-columns:1fr!important}}
 
-@media(max-width:1180px){.links{display:none}.burger{display:block}.links.open{display:flex;flex-direction:column;align-items:stretch;position:absolute;top:calc(100% + 10px);right:0;left:0;padding:12px;border-radius:22px;background:rgba(10,16,30,.92);border:1px solid var(--edge)}.links.open .more .menu{position:static;background:none;border:0;box-shadow:none}.rgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:1260px){.links{display:none}.burger{display:block}.links.open{display:flex;flex-direction:column;align-items:stretch;position:absolute;top:calc(100% + 10px);right:0;left:0;padding:12px;border-radius:22px;background:rgba(10,16,30,.92);border:1px solid var(--edge)}.links.open .more .menu{position:static;background:none;border:0;box-shadow:none}.rgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:860px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.svc,.grid3,.grid2{grid-template-columns:1fr}.rail-grid,.railnav .r{grid-template-columns:1fr}.railnav{position:static;padding-bottom:60px}.railnav .r>div:first-child{display:none}.rail-grid{padding-block:110px 30px}.wpanel{padding:28px 24px}.sec{padding-block:84px}form.rfp{grid-template-columns:1fr}}
 @media(max-width:560px){.rgrid{grid-template-columns:1fr}.wx{top:calc(100px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));padding:9px 14px 9px 11px}.wx .t{font-size:30px}.perks{border-radius:22px}}
 @media(prefers-reduced-motion:reduce){.name h1 .ch,.name p,.name .rule{transition:none}.track,.fade{transition:none}}
+
+/* ===== Fiesta de Año Nuevo ===== */
+.links>a.nye{position:relative;opacity:1;color:#fff4d6;background:linear-gradient(110deg,rgba(207,174,107,.22),rgba(255,236,190,.38),rgba(207,174,107,.22));background-size:220% 100%;border:1px solid rgba(240,214,150,.7);box-shadow:0 0 18px rgba(240,200,120,.45),inset 0 0 10px rgba(255,230,170,.18);animation:nyeShine 3.2s linear infinite,nyeGlow 2.4s ease-in-out infinite}
+.links>a.nye:hover,.links>a.nye.on{background-color:rgba(207,174,107,.35)}
+.links>a.nye::before{content:"✦";margin-right:6px;color:#ffe3a3;display:inline-block;animation:nyeTwinkle 1.6s ease-in-out infinite}
+@keyframes nyeShine{to{background-position:-220% 0}}
+@keyframes nyeGlow{0%,100%{box-shadow:0 0 12px rgba(240,200,120,.35),inset 0 0 8px rgba(255,230,170,.15)}50%{box-shadow:0 0 26px rgba(255,214,140,.75),inset 0 0 14px rgba(255,230,170,.3)}}
+@keyframes nyeTwinkle{0%,100%{opacity:.5;transform:scale(.8) rotate(0)}50%{opacity:1;transform:scale(1.15) rotate(20deg)}}
+.nye-hero{position:relative;height:100svh;min-height:560px;display:grid;place-items:center;text-align:center;overflow:hidden;isolation:isolate}
+.nye-hero .nye-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;background:#05070f}
+.nye-hero::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 50% 50%,rgba(5,7,15,.15),rgba(5,7,15,.6) 75%),linear-gradient(180deg,rgba(5,7,15,.5),rgba(5,7,15,0) 30%,rgba(5,7,15,0) 70%,var(--ink) 100%)}
+.nye-hero-in{display:flex;flex-direction:column;align-items:center;gap:18px}
+.nye-title{font-family:var(--serif);font-weight:400;font-size:clamp(46px,9vw,140px);line-height:.95;letter-spacing:.08em;text-transform:uppercase;text-wrap:balance;background:linear-gradient(100deg,#c9a45e 0%,#fff3d1 25%,#ffffff 35%,#e8c987 52%,#fff3d1 70%,#c9a45e 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:nyeShine 6s linear infinite;filter:drop-shadow(0 6px 30px rgba(0,0,0,.65)) drop-shadow(0 0 30px rgba(255,214,140,.35))}
+.nye-scroll{margin-top:30px;display:flex;flex-direction:column;align-items:center;gap:12px;text-decoration:none;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--sand)}
+.nye-scroll i{width:1px;height:54px;background:linear-gradient(180deg,#f3dca4,transparent);animation:nyeDrop 1.8s ease-in-out infinite;transform-origin:top}
+@keyframes nyeDrop{0%{transform:scaleY(0);opacity:1}70%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
+.nye-info{position:relative;isolation:isolate;overflow:hidden;padding-block:110px 120px}
+.nye-blur{position:absolute;inset:-40px;z-index:-2;background:url(nye-night.jpg) center 40%/cover no-repeat;filter:blur(10px) brightness(.62) saturate(1.15)}
+.nye-info::before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,var(--ink) 0,rgba(6,10,20,.15) 160px,rgba(6,10,20,.2) calc(100% - 200px),var(--ink) 100%);pointer-events:none}
+.nye-info canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.nye-head{border-radius:30px;padding:46px 30px 40px;width:100%;max-width:1280px;box-sizing:border-box}
+.nye-prog,.nye-split{max-width:1280px}
+#nye-buy{scroll-margin-top:110px}
+.nye-buy,.nye-split>.g,.nye-prog>.g{box-sizing:border-box;min-width:0}
+.nye-head .nye-year{font-size:clamp(90px,15vw,200px)}
+.nye-buy{border-radius:26px;padding:34px 32px;display:flex;flex-direction:column;gap:16px}
+.nye-buy h3{font-family:var(--serif);font-weight:400;font-size:34px;line-height:1.05}
+.nye-qty{display:grid;gap:12px}
+.nye-qty>div{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14)}
+.nye-qty span{font-size:15px}.nye-qty small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.stp{display:flex;align-items:center;gap:6px}
+.stp button{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:var(--fg);font-size:20px;line-height:1;cursor:pointer}
+.stp button:hover{background:rgba(207,174,107,.3)}
+.stp input{width:48px;text-align:center;background:transparent;border:0;color:var(--fg);font-size:20px;font-family:var(--serif);-moz-appearance:textfield}
+.stp input::-webkit-inner-spin-button,.stp input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.nye-total{display:flex;align-items:baseline;justify-content:space-between;padding:6px 2px 4px;border-bottom:1px solid rgba(255,255,255,.14)}
+.nye-total span{font-size:12.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--sand)}
+.nye-total b{font-family:var(--serif);font-weight:400;font-size:36px;color:#fff4d6}
+.nye-many{font-size:14px;color:#ffe1a6;line-height:1.6}
+.nye-buy .f2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.nye-buy label{display:flex;flex-direction:column;gap:6px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.nye-buy label.full{grid-column:1/-1}
+.nye-buy label.chk{flex-direction:row;align-items:center;gap:10px;text-transform:none;letter-spacing:0;font-size:14px;color:var(--fg)}
+.nye-buy input:not([type=checkbox]):not(.stp input){padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.07);color:var(--fg);font:15px var(--sans);letter-spacing:0;text-transform:none}
+.nye-buy input[aria-invalid]{border-color:#ff9a8a}
+.nye-buy .btn{align-self:flex-start}
+.nye-buy .ok{font-size:14px;line-height:1.6}
+.nye-buy .err{color:#ffb4a8}
+.nye-done-box{text-align:center;padding:20px 0}
+.nye-done-box .tick{width:64px;height:64px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;border:1px solid #f3dca4;color:#f3dca4;font-size:26px}
+.nye-done-box h3{font-family:var(--serif);font-weight:400;font-size:34px}
+.nye-done-box p{color:var(--muted);margin-top:8px;line-height:1.6}
+.nye-year{font-family:var(--serif);font-weight:300;font-size:clamp(110px,22vw,330px);line-height:.82;letter-spacing:.02em;background:linear-gradient(100deg,#9c7a3c 0%,#f6e3b0 22%,#fff8e6 32%,#cfae6b 48%,#f3dca4 66%,#9c7a3c 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:nyeShine 6s linear infinite;filter:drop-shadow(0 10px 50px rgba(240,200,120,.35))}
+.nye-hero h2{margin-top:10px}
+.nye-date{margin-top:18px;font-size:13px;letter-spacing:.42em;text-transform:uppercase;color:var(--sand)}
+.nye-count{display:flex;gap:14px;justify-content:center;margin-top:34px;flex-wrap:wrap}
+.nye-count div{min-width:92px;padding:16px 10px 12px;border-radius:18px}
+.nye-count b{display:block;font-family:var(--serif);font-weight:400;font-size:44px;line-height:1;color:#fff4d6}
+.nye-count span{display:block;margin-top:6px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.nye-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+.btn.nye-btn{box-shadow:0 0 0 rgba(240,200,120,0);animation:nyeGlow 2.4s ease-in-out infinite}
+.nye-prog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:22px;width:100%;text-align:left}
+.nye-prog .g{border-radius:24px;padding:30px 28px}
+.nye-prog time{font-family:var(--serif);font-size:46px;color:#f3dca4;line-height:1}
+.nye-prog h3{font-family:var(--serif);font-weight:400;font-size:28px;margin-top:12px}
+.nye-prog p{color:var(--muted);line-height:1.65;margin-top:8px}
+.nye-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;margin-top:22px;width:100%;text-align:left}
+.nye-split>.g{border-radius:26px;padding:34px 32px}
+.nye-inc{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:14px}
+.nye-inc li{display:flex;gap:14px;align-items:flex-start;line-height:1.6}
+.nye-inc li::before{content:"✦";color:var(--gold);flex:none;margin-top:1px}
+.nye-price{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.14)}
+.nye-price b{font-family:var(--serif);font-weight:400;font-size:48px;color:#fff4d6;line-height:1}
+.nye-price span{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--sand)}
+.nye-fine{color:var(--faint);font-size:14px;line-height:1.7;margin-top:16px}
+.nye-call{margin-top:16px;font-size:15px;line-height:1.8}
+.nye-call a{color:#f3dca4;text-decoration:none;white-space:nowrap}
+.nye-teaser{position:relative;overflow:hidden;isolation:isolate;padding-block:110px}
+.nye-teaser .photo-bg{z-index:-2}
+.nye-teaser canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.nye-teaser .nye-year{font-size:clamp(90px,15vw,200px)}
+.nye-head.nye-done .nye-count{display:none}
+.brand b,.brand span{white-space:nowrap}
+@media(min-width:1261px){.links>a,.more>summary{padding:10px 9px;font-size:12.5px}}
+@media(max-width:1400px) and (min-width:1261px){.links>a,.more>summary{padding:9px 7px;font-size:12px}.links>a.nye::before{margin-right:4px}}
+@media(max-width:900px){.nye-prog,.nye-split{grid-template-columns:1fr}}
+@media(max-width:560px){.nye-count{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;width:100%}.nye-count div{min-width:0;padding:12px 4px 10px;border-radius:14px}.nye-count b{font-size:28px}.nye-count span{font-size:9px;letter-spacing:.14em}.nye-date{letter-spacing:.24em}.nye-split>.g{padding:26px 22px}.nye-buy .f2{grid-template-columns:1fr}.nye-head{padding:34px 16px 28px}.nye-hero .kick{font-size:11px;letter-spacing:.22em}.nye-price b{font-size:38px}}
+@media(prefers-reduced-motion:reduce){.links>a.nye,.links>a.nye::before,.nye-year,.nye-title,.nye-scroll i,.btn.nye-btn{animation:none}}
 </style>
 
 <nav class="top g" aria-label="Main">
  <a class="brand" href="#home"><b>LAS ROCAS</b><span>RESORT &amp; SPA</span></a>
  <div class="links" id="links">
-  <a href="#home" data-n="home">Home</a><a href="#rooms" data-n="rooms">Rooms &amp; Suites</a><a href="#packages" data-n="packages">Packages &amp; Promotions</a><a href="#spa" data-n="spa">Holistic Spa</a><a href="#weddings" data-n="weddings">Weddings</a><a href="#dining" data-n="dining">Restaurant &amp; Bars</a><a href="#contact" data-n="contact">Contact Us</a>
+  <a href="#home" data-n="home">Home</a><a href="#new-year" data-n="new-year" class="nye" data-nye>New Year’s Eve</a><a href="#rooms" data-n="rooms">Rooms &amp; Suites</a><a href="#packages" data-n="packages">Packages &amp; Promotions</a><a href="#spa" data-n="spa">Holistic Spa</a><a href="#weddings" data-n="weddings">Weddings</a><a href="#dining" data-n="dining">Restaurant &amp; Bars</a><a href="#contact" data-n="contact">Contact Us</a>
   <details class="more"><summary>More</summary><div class="menu g"><a href="#attractions">What to do in Rosarito</a><a href="#vr-tours">VR Tours</a><a href="#insurance">Insurance</a><a href="#know-before-you-go">Know before you go</a><a href="#about">About us</a></div></details>
   <span class="lang" role="group" aria-label="Change language"><button type="button" data-lang="en">EN</button><i aria-hidden="true">·</i><button type="button" data-lang="es">ES</button></span>
  </div>
@@ -419,6 +507,17 @@ a.room:hover{transform:translateY(-6px);box-shadow:inset 0 1px 0 rgba(255,255,25
   </div>
  </section>
 
+
+ <section class="nye-teaser sec" data-sec="ano-nuevo" data-nye>
+  <div class="photo-bg" style="background-image:url(nye-night.jpg);background-position:center 45%"></div><canvas class="nye-fw" aria-hidden="true"></canvas>
+  <div class="wrap center">
+   <div class="kick">December 31 · Las Rocas</div>
+   <div class="nye-year" aria-hidden="true">2027</div>
+   <h2>New Year’s <em>Eve Gala</em></h2>
+   <p class="lede">Four-course dinner by the ocean, a champagne toast, the 12 grapes at midnight and live music by Séptima Luna.</p>
+   <div class="nye-cta"><a class="btn solid nye-btn" href="#new-year">See the gala</a><a class="btn" href="#new-year" data-nye-buy>Reserve tickets</a></div>
+  </div>
+ </section>
  <section class="sec news" id="news" data-sec="novedades" hidden>
   <div class="wrap center"><div class="kick">Now at Las Rocas</div><h2>Events <em>&amp; offers</em></h2>
   <div class="news-grid" id="news-grid"></div></div>
@@ -532,6 +631,77 @@ a.room:hover{transform:translateY(-6px);box-shadow:inset 0 1px 0 rgba(255,255,25
  <section class="phead" style="min-height:min(62svh,560px)"><div class="photo-bg" style="background-image:url(bg-spa-beach.jpg);filter:blur(1.5px)"></div><div class="wrap center"><div class="crumbs"><a href="#home">Home</a> / Holistic Spa</div><h2>Holistic <em>Spa</em></h2><p class="lede">Be pampered in our full-service spa overlooking the Pacific. Signature treatments designed to uplift your mind, body and spirit.</p>
   <div class="tabs-bar g" role="tablist" id="spa-tabs" style="margin-top:30px"></div></div></section>
  <section class="sec" style="padding-top:40px"><div class="wrap" id="spa-pane"></div></section>
+</main>
+
+
+<!-- ============ NEW YEAR'S EVE ============ -->
+<main data-view="new-year" hidden data-nye>
+ <header class="nye-hero" id="nye-hero">
+  <video class="nye-bg" id="nye-v" src="nye.mp4" poster="nye-poster.jpg" muted loop playsinline preload="metadata" aria-hidden="true"></video>
+  <div class="wrap center nye-hero-in">
+   <div class="kick">Las Rocas Resort &amp; Spa · December 31</div>
+   <h1 class="nye-title">New Year’s Eve Party</h1>
+   <a class="nye-scroll" href="#nye-info" data-nye-scroll><span>Tickets &amp; details</span><i aria-hidden="true"></i></a>
+  </div>
+ </header>
+
+ <section class="nye-info" id="nye-info" data-sec="ano-nuevo-detalle">
+  <div class="nye-blur" aria-hidden="true"></div><canvas class="nye-fw" aria-hidden="true"></canvas>
+  <div class="wrap center">
+   <div class="g nye-head">
+    <div class="kick">Las Rocas Resort &amp; Spa presents</div>
+    <div class="nye-year" aria-hidden="true">2027</div>
+    <h2>New Year’s <em>Eve Gala</em></h2>
+    <div class="nye-date">Thursday, December 31 · 7:30 pm</div>
+    <div class="nye-count" id="nye-count" role="timer" aria-label="Time left until the gala">
+     <div class="g"><b data-u="d">--</b><span>Days</span></div><div class="g"><b data-u="h">--</b><span>Hours</span></div><div class="g"><b data-u="m">--</b><span>Minutes</span></div><div class="g"><b data-u="s">--</b><span>Seconds</span></div>
+    </div>
+   </div>
+
+   <div class="nye-prog">
+    <div class="g"><time>7:30</time><h3>Welcome reception</h3><p>Arrive, dress up and meet the night with the ocean at sunset.</p></div>
+    <div class="g"><time>8:45</time><h3>Four-course dinner</h3><p>Sky, sea and land: a four-course menu served at your table.</p></div>
+    <div class="g"><time>10:00</time><h3>The party</h3><p>Live music by Séptima Luna until the countdown and beyond.</p></div>
+   </div>
+
+   <div class="nye-split">
+    <div class="g">
+     <div class="kick">Included</div>
+     <ul class="nye-inc">
+      <li>Four-course dinner: sky, sea and land</li>
+      <li>A glass of champagne for the midnight toast</li>
+      <li>The 12 grapes at midnight</li>
+      <li>Live music by Séptima Luna</li>
+      <li>Shared tables of 8. Groups of 8 or more can ask for their own table.</li>
+     </ul>
+     <div class="nye-price"><span>Adult</span><b>$99 USD</b></div>
+     <div class="nye-price"><span>Child</span><b>$49.50 USD</b></div>
+     <p class="nye-fine">Up to 4 tickets per purchase. For larger groups or the gala with a room, our reservations team will help you. Refunds up to 10 days before the event.</p>
+     <p class="nye-call">From the U.S. <a href="tel:+18664458909">1 866 445 8909</a><br>From Mexico <a href="tel:+526616149850">661 614 9850</a><br>Lisa, 24/7 <a href="tel:+16197597429">+1 619 759 7429</a></p>
+    </div>
+    <form class="g nye-buy" id="nye-buy" novalidate>
+     <div class="kick">Tickets</div>
+     <h3>Get your tickets</h3>
+     <div class="nye-qty">
+      <div><span>Adults<small>$99 USD</small></span><div class="stp"><button type="button" data-step="adults:-1" aria-label="One adult less">−</button><input name="adults" type="number" min="1" max="20" value="2" inputmode="numeric" aria-label="Adults"><button type="button" data-step="adults:1" aria-label="One adult more">+</button></div></div>
+      <div><span>Children<small>$49.50 USD</small></span><div class="stp"><button type="button" data-step="children:-1" aria-label="One child less">−</button><input name="children" type="number" min="0" max="20" value="0" inputmode="numeric" aria-label="Children"><button type="button" data-step="children:1" aria-label="One child more">+</button></div></div>
+     </div>
+     <div class="nye-total"><span>Total</span><b id="nye-total">$198.00 USD</b></div>
+     <p class="nye-many" id="nye-many" hidden>More than 4 tickets: our reservations team will contact you to arrange it.</p>
+     <div class="f2">
+      <label class="full">Full name<input name="name" required autocomplete="name"></label>
+      <label>Phone / WhatsApp<input name="phone" type="tel" autocomplete="tel" placeholder="+1 619 555 0142"></label>
+      <label>Email<input name="email" type="email" autocomplete="email" placeholder="you@email.com"></label>
+      <label class="full chk"><input name="lodging" type="checkbox">I also need a room that night</label>
+     </div>
+     <input name="website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+     <button class="btn solid nye-btn" type="submit">Reserve tickets</button>
+     <div class="ok err" role="alert" hidden></div>
+     <p class="nye-fine">Our team confirms your tickets and sends you the payment details. We never ask for card numbers on this form.</p>
+    </form>
+   </div>
+  </div>
+ </section>
 </main>
 
 <!-- ============ WEDDINGS ============ -->
