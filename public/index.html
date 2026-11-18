@@ -384,7 +384,10 @@ a.room:hover{transform:translateY(-6px);box-shadow:inset 0 1px 0 rgba(255,255,25
 @media(prefers-reduced-motion:reduce){.name h1 .ch,.name p,.name .rule{transition:none}.track,.fade{transition:none}}
 
 /* ===== Fiesta de Año Nuevo ===== */
-.links>a.nye{position:relative;opacity:1;color:#fff4d6;background:linear-gradient(110deg,rgba(207,174,107,.22),rgba(255,236,190,.38),rgba(207,174,107,.22));background-size:220% 100%;border:1px solid rgba(240,214,150,.7);box-shadow:0 0 18px rgba(240,200,120,.45),inset 0 0 10px rgba(255,230,170,.18);animation:nyeShine 3.2s linear infinite,nyeGlow 2.4s ease-in-out infinite}
+.links>a.nye{position:relative;opacity:1;color:#fff4d6;background:linear-gradient(110deg,rgba(207,174,107,.22),rgba(255,236,190,.38),rgba(207,174,107,.22));background-size:220% 100%;border:1px solid rgba(240,214,150,.7);box-shadow:0 0 16px rgba(240,200,120,.4),inset 0 0 10px rgba(255,230,170,.18)}
+.links>a.nye::after{content:"";position:absolute;inset:-1px;border-radius:inherit;box-shadow:0 0 28px rgba(255,214,140,.8);opacity:0;animation:nyePulse 2.4s ease-in-out infinite;pointer-events:none}
+@keyframes nyePulse{50%{opacity:1}}
+@keyframes nyeShineOnce{from{background-position:100% 0}to{background-position:-150% 0}}
 .links>a.nye:hover,.links>a.nye.on{background-color:rgba(207,174,107,.35)}
 .links>a.nye::before{content:"✦";margin-right:6px;color:#ffe3a3;display:inline-block;animation:nyeTwinkle 1.6s ease-in-out infinite}
 @keyframes nyeShine{to{background-position:-220% 0}}
@@ -392,16 +395,19 @@ a.room:hover{transform:translateY(-6px);box-shadow:inset 0 1px 0 rgba(255,255,25
 @keyframes nyeTwinkle{0%,100%{opacity:.5;transform:scale(.8) rotate(0)}50%{opacity:1;transform:scale(1.15) rotate(20deg)}}
 .nye-hero{position:relative;height:100svh;min-height:560px;display:grid;place-items:center;text-align:center;overflow:hidden;isolation:isolate}
 .nye-hero .nye-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;background:#05070f}
-.nye-hero::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 50% 50%,rgba(5,7,15,.15),rgba(5,7,15,.6) 75%),linear-gradient(180deg,rgba(5,7,15,.5),rgba(5,7,15,0) 30%,rgba(5,7,15,0) 70%,var(--ink) 100%)}
+.nye-hero::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 60% 40% at 50% 50%,rgba(5,7,15,.45),rgba(5,7,15,0) 100%),radial-gradient(ellipse at 50% 50%,rgba(5,7,15,.15),rgba(5,7,15,.6) 75%),linear-gradient(180deg,rgba(5,7,15,.5),rgba(5,7,15,0) 30%,rgba(5,7,15,0) 70%,var(--ink) 100%)}
 .nye-hero-in{display:flex;flex-direction:column;align-items:center;gap:18px}
-.nye-title{font-family:var(--serif);font-weight:400;font-size:clamp(46px,9vw,140px);line-height:.95;letter-spacing:.08em;text-transform:uppercase;text-wrap:balance;background:linear-gradient(100deg,#c9a45e 0%,#fff3d1 25%,#ffffff 35%,#e8c987 52%,#fff3d1 70%,#c9a45e 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:nyeShine 6s linear infinite;filter:drop-shadow(0 6px 30px rgba(0,0,0,.65)) drop-shadow(0 0 30px rgba(255,214,140,.35))}
+.nye-title{font-family:var(--serif);font-weight:400;font-size:clamp(46px,9vw,140px);line-height:.95;letter-spacing:.08em;text-transform:uppercase;text-wrap:balance;background:linear-gradient(100deg,#c9a45e 0%,#fff3d1 25%,#ffffff 35%,#e8c987 52%,#fff3d1 70%,#c9a45e 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;background-position:100% 0;animation:nyeShineOnce 2.6s ease-out .3s 1 both}
 .nye-scroll{margin-top:30px;display:flex;flex-direction:column;align-items:center;gap:12px;text-decoration:none;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--sand)}
 .nye-scroll i{width:1px;height:54px;background:linear-gradient(180deg,#f3dca4,transparent);animation:nyeDrop 1.8s ease-in-out infinite;transform-origin:top}
 @keyframes nyeDrop{0%{transform:scaleY(0);opacity:1}70%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
 .nye-info{position:relative;isolation:isolate;overflow:hidden;padding-block:110px 120px}
-.nye-blur{position:absolute;inset:-40px;z-index:-2;background:url(nye-night.jpg) center 40%/cover no-repeat;filter:blur(10px) brightness(.62) saturate(1.15)}
+.nye-blur{position:absolute;inset:0;z-index:-2;background:url(nye-night-blur.jpg) center 40%/cover no-repeat}
 .nye-info::before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,var(--ink) 0,rgba(6,10,20,.15) 160px,rgba(6,10,20,.2) calc(100% - 200px),var(--ink) 100%);pointer-events:none}
-.nye-info canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.nye-info canvas{position:absolute;top:0;left:0;width:100%;height:min(100svh,900px);z-index:-1;pointer-events:none}
+/* el fondo ya viene difuminado: sin backdrop-filter aquí (era lo que trababa el scroll) */
+.nye-info .g{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(14,20,36,.42)}
+.nye-info .g .g{background:rgba(255,255,255,.08)}
 .nye-head{border-radius:30px;padding:46px 30px 40px;width:100%;max-width:1280px;box-sizing:border-box}
 .nye-prog,.nye-split{max-width:1280px}
 #nye-buy{scroll-margin-top:110px}
@@ -434,7 +440,7 @@ a.room:hover{transform:translateY(-6px);box-shadow:inset 0 1px 0 rgba(255,255,25
 .nye-done-box .tick{width:64px;height:64px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;border:1px solid #f3dca4;color:#f3dca4;font-size:26px}
 .nye-done-box h3{font-family:var(--serif);font-weight:400;font-size:34px}
 .nye-done-box p{color:var(--muted);margin-top:8px;line-height:1.6}
-.nye-year{font-family:var(--serif);font-weight:300;font-size:clamp(110px,22vw,330px);line-height:.82;letter-spacing:.02em;background:linear-gradient(100deg,#9c7a3c 0%,#f6e3b0 22%,#fff8e6 32%,#cfae6b 48%,#f3dca4 66%,#9c7a3c 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:nyeShine 6s linear infinite;filter:drop-shadow(0 10px 50px rgba(240,200,120,.35))}
+.nye-year{font-family:var(--serif);font-weight:300;font-size:clamp(110px,22vw,330px);line-height:.82;letter-spacing:.02em;background:linear-gradient(100deg,#9c7a3c 0%,#f6e3b0 22%,#fff8e6 32%,#cfae6b 48%,#f3dca4 66%,#9c7a3c 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;background-position:100% 0;animation:nyeShineOnce 2.6s ease-out .3s 1 both}
 .nye-hero h2{margin-top:10px}
 .nye-date{margin-top:18px;font-size:13px;letter-spacing:.42em;text-transform:uppercase;color:var(--sand)}
 .nye-count{display:flex;gap:14px;justify-content:center;margin-top:34px;flex-wrap:wrap}
@@ -442,7 +448,7 @@ a.room:hover{transform:translateY(-6px);box-shadow:inset 0 1px 0 rgba(255,255,25
 .nye-count b{display:block;font-family:var(--serif);font-weight:400;font-size:44px;line-height:1;color:#fff4d6}
 .nye-count span{display:block;margin-top:6px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
 .nye-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
-.btn.nye-btn{box-shadow:0 0 0 rgba(240,200,120,0);animation:nyeGlow 2.4s ease-in-out infinite}
+.btn.nye-btn{box-shadow:0 0 22px rgba(240,200,120,.45)}
 .nye-prog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:22px;width:100%;text-align:left}
 .nye-prog .g{border-radius:24px;padding:30px 28px}
 .nye-prog time{font-family:var(--serif);font-size:46px;color:#f3dca4;line-height:1}
@@ -469,7 +475,7 @@ a.room:hover{transform:translateY(-6px);box-shadow:inset 0 1px 0 rgba(255,255,25
 @media(max-width:1400px) and (min-width:1261px){.links>a,.more>summary{padding:9px 7px;font-size:12px}.links>a.nye::before{margin-right:4px}}
 @media(max-width:900px){.nye-prog,.nye-split{grid-template-columns:1fr}}
 @media(max-width:560px){.nye-count{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;width:100%}.nye-count div{min-width:0;padding:12px 4px 10px;border-radius:14px}.nye-count b{font-size:28px}.nye-count span{font-size:9px;letter-spacing:.14em}.nye-date{letter-spacing:.24em}.nye-split>.g{padding:26px 22px}.nye-buy .f2{grid-template-columns:1fr}.nye-head{padding:34px 16px 28px}.nye-hero .kick{font-size:11px;letter-spacing:.22em}.nye-price b{font-size:38px}}
-@media(prefers-reduced-motion:reduce){.links>a.nye,.links>a.nye::before,.nye-year,.nye-title,.nye-scroll i,.btn.nye-btn{animation:none}}
+@media(prefers-reduced-motion:reduce){.links>a.nye,.links>a.nye::before,.links>a.nye::after,.nye-year,.nye-title,.nye-scroll i,.btn.nye-btn{animation:none}}
 </style>
 
 <nav class="top g" aria-label="Main">
@@ -646,7 +652,7 @@ a.room:hover{transform:translateY(-6px);box-shadow:inset 0 1px 0 rgba(255,255,25
  </header>
 
  <section class="nye-info" id="nye-info" data-sec="ano-nuevo-detalle">
-  <div class="nye-blur" aria-hidden="true"></div><canvas class="nye-fw" aria-hidden="true"></canvas>
+  <div class="nye-blur" aria-hidden="true"></div>
   <div class="wrap center">
    <div class="g nye-head">
     <div class="kick">Las Rocas Resort &amp; Spa presents</div>

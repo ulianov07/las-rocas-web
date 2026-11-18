@@ -390,7 +390,7 @@
     document.querySelectorAll('canvas.nye-fw').forEach((cv) => {
       const ctx = cv.getContext('2d'); if (!ctx) return
       let W = 0, H = 0, dpr = 1, parts = [], rockets = [], raf = 0, on = false, last = 0, next = 0
-      const size = () => { dpr = Math.min(2, devicePixelRatio || 1); W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0) }
+      const size = () => { dpr = 1; W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0) }
       const burst = (x, y) => {
         const c = COLORS[(Math.random() * COLORS.length) | 0], n = 70 + ((Math.random() * 50) | 0), sp = 2.2 + Math.random() * 2.4
         for (let i = 0; i < n; i++) { const a = (i / n) * Math.PI * 2, v = sp * (0.55 + Math.random() * 0.45); parts.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1, decay: 0.008 + Math.random() * 0.01, c }) }
