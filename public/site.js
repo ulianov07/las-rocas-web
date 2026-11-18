@@ -258,13 +258,20 @@
   }, 'Request sent. Our events team will contact you with a proposal.')
 
   /* ---------- clima real ---------- */
-  fetch('https://api.open-meteo.com/v1/forecast?latitude=32.2616&longitude=-116.9906&current=temperature_2m,weather_code&timezone=America%2FTijuana')
-    .then((r) => r.json()).then((d) => {
-      const c = d?.current; if (!c || typeof c.temperature_2m !== 'number') return
-      const w = c.weather_code, label = w === 0 ? 'Clear' : w <= 3 ? 'Partly cloudy' : w <= 48 ? 'Fog' : w <= 67 ? 'Rain' : w <= 77 ? 'Snow' : w <= 82 ? 'Showers' : 'Storm'
-      $('#wx-t').textContent = Math.round(c.temperature_2m) + '°C'
-      $('#wx-s').innerHTML = `Rosarito, K38<br>${T(label)} · ${Math.round(c.temperature_2m * 9 / 5 + 32)}°F`
-    }).catch(() => { const t = $('#wx-t'); if (t) t.closest('.wx').hidden = true })
+  // Primero el servidor del sitio (/api/clima, con caché); si falla, directo a
+  // Open-Meteo. Si nada responde con una temperatura, se oculta el recuadro.
+  const wxBox = $('#wx-t') && $('#wx-t').closest('.wx')
+  const wxGet = (url, pick) => fetch(url, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : Promise.reject(r.status))).then((d) => {
+    const v = pick(d); if (!v || typeof v.t !== 'number' || !isFinite(v.t)) throw new Error('sin clima'); return v
+  })
+  wxGet('/api/clima', (d) => ({ t: d.temperature, w: d.code }))
+    .catch(() => wxGet('https://api.open-meteo.com/v1/forecast?latitude=32.2616&longitude=-116.9906&current=temperature_2m,weather_code&timezone=America%2FTijuana', (d) => d && d.current && { t: d.current.temperature_2m, w: d.current.weather_code }))
+    .then(({ t, w }) => {
+      const label = w === 0 ? 'Clear' : w <= 3 ? 'Partly cloudy' : w <= 48 ? 'Fog' : w <= 67 ? 'Rain' : w <= 77 ? 'Snow' : w <= 82 ? 'Showers' : 'Storm'
+      $('#wx-t').textContent = Math.round(t) + '°C'
+      $('#wx-s').innerHTML = `Rosarito, K38<br>${T(label)} · ${Math.round(t * 9 / 5 + 32)}°F`
+    })
+    .catch(() => { if (wxBox) wxBox.hidden = true })
 
   /* ---------- medición anónima (solo con permiso) ---------- */
   let queue = [], session = null
